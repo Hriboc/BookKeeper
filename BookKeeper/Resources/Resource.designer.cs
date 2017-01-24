@@ -83,23 +83,23 @@ namespace BookKeeper
 			// aapt resource value: 0x7f04000a
 			public const int ll_type = 2130968586;
 			
+			// aapt resource value: 0x7f040003
+			public const int rb_expense = 2130968579;
+			
 			// aapt resource value: 0x7f040002
 			public const int rb_income = 2130968578;
 			
-			// aapt resource value: 0x7f040003
-			public const int rb_spending = 2130968579;
-			
 			// aapt resource value: 0x7f040001
-			public const int rg_income_spending = 2130968577;
+			public const int rg_income_expense = 2130968577;
+			
+			// aapt resource value: 0x7f04000c
+			public const int spn_income_expanse_account = 2130968588;
 			
 			// aapt resource value: 0x7f04000f
-			public const int spn_account = 2130968591;
+			public const int spn_money_account = 2130968591;
 			
 			// aapt resource value: 0x7f040015
 			public const int spn_taxe_rate = 2130968597;
-			
-			// aapt resource value: 0x7f04000c
-			public const int spn_type = 2130968588;
 			
 			// aapt resource value: 0x7f04000e
 			public const int tv_account = 2130968590;
@@ -187,11 +187,11 @@ namespace BookKeeper
 			// aapt resource value: 0x7f030009
 			public const int ed_type = 2130903049;
 			
+			// aapt resource value: 0x7f030006
+			public const int rb_expense = 2130903046;
+			
 			// aapt resource value: 0x7f030005
 			public const int rb_income = 2130903045;
-			
-			// aapt resource value: 0x7f030006
-			public const int rb_spending = 2130903046;
 			
 			// aapt resource value: 0x7f030004
 			public const int tv_user_info = 2130903044;

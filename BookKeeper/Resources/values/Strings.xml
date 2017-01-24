@@ -10,7 +10,7 @@
 	<!-- Entry layout-->
 	<string name="tv_user_info">Här kan du lägga till nya händelser, antingen inkomster eller utgifter.</string>
 	<string name="rb_income">Inkomster</string>
-	<string name="rb_spending">Utgifter</string>
+	<string name="rb_expense">Utgifter</string>
 	<string name="ed_date">Datum:</string>
 	<string name="ed_description">Beskrivning:</string>
 	<string name="ed_type">Typ:</string>

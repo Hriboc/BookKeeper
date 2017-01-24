@@ -7,9 +7,6 @@ namespace BookKeeper
 		private Account moneyAccount;
 		private TaxRate taxRate;
 
-		Entry()
-		{
-		}
 		// Account types
 		internal bool IncomeAccount { get; set; }
 		internal bool ExpanseAccount { get; set; }
@@ -54,9 +51,9 @@ namespace BookKeeper
 		// Help methonds for parsing account and tax rate
 		private Account parseAccount(string account)
 		{
-			string[] nameAndNumber = account.Split(' ');
-			string name = nameAndNumber[0];
-			string number = nameAndNumber[1].Substring(1, nameAndNumber[1].Length - 2);
+			string[] nameAndNumber = account.Split('(');
+			string name = nameAndNumber[0].TrimEnd();
+			string number = nameAndNumber[1].Substring(0, nameAndNumber[1].Length - 1);
 			return new Account(name, int.Parse(number));
 		}
 
