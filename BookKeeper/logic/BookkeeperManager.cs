@@ -11,10 +11,10 @@ namespace BookKeeper
 		private IList<Account> incomeAccounts = new List<Account>();
 		private IList<Account> expenseAccounts = new List<Account>();
 		private IList<Account> moneyAccounts = new List<Account>();
-		private IList<TaxRate> taxRates = new List<TaxRate>(); 
+		private IList<TaxRate> taxRates = new List<TaxRate>();
 		private IList<Entry> entries = new List<Entry>();
 
-		private BookkeeperManager() 
+		private BookkeeperManager()
 		{
 			// Add income accounts
 			incomeAccounts.Add(new Account("Försäljning varor", 3010));
@@ -82,4 +82,5 @@ namespace BookKeeper
 		{
 			entries.Add(e);
 		}
+	}
 }

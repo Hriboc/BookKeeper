@@ -1,6 +1,8 @@
 ﻿using Android.App;
 using Android.Widget;
 using Android.OS;
+using Android.Views;
+using Android.Content;
 
 namespace BookKeeper
 {
@@ -13,6 +15,12 @@ namespace BookKeeper
 
 			// Set our view from the "main" layout resource
 			SetContentView(Resource.Layout.Main);
+
+			Button btnNewEntry = FindViewById<Button>(Resource.Id.btn_new_entry);
+			btnNewEntry.Click += delegate
+			{
+				StartActivity(typeof(EntryActivity));
+			};
 		}
 	}
 }

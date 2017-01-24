@@ -16,11 +16,20 @@ namespace BookKeeper
 	[Activity(Label = "EntryActivity")]
 	public class EntryActivity : Activity
 	{
+		BookkeeperManager manager = BookkeeperManager.Instance;
+
+		Spinner spnIncomeOrExpanseAccount;
+
 		protected override void OnCreate(Bundle savedInstanceState)
 		{
 			base.OnCreate(savedInstanceState);
 
+			// Set our view from the "main" layout resource
+			SetContentView(Resource.Layout.Entry);
+
 			// Create your application here
+			spnIncomeOrExpanseAccount = FindViewById<Spinner>(Resource.Id.spn_type);
+			//Adapter adpIncomeOrExpanse = new ArrayAdapter(this,
 		}
 	}
 }
