@@ -59,7 +59,10 @@ namespace BookKeeper
 
 		private TaxRate parseTaxRate(string rate)
 		{
-			return new TaxRate(double.Parse(rate[0].ToString()));
+			return new TaxRate(double
+			                   .Parse(rate
+	                           .Remove(rate
+                               .IndexOf('%'))));
 		}
 
 

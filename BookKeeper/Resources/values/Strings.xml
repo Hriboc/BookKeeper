@@ -11,11 +11,12 @@
 	<string name="tv_user_info">Här kan du lägga till nya händelser, antingen inkomster eller utgifter.</string>
 	<string name="rb_income">Inkomster</string>
 	<string name="rb_expense">Utgifter</string>
-	<string name="ed_date">Datum:</string>
-	<string name="ed_description">Beskrivning:</string>
-	<string name="ed_type">Typ:</string>
-	<string name="ed_account">Till/Från konto:</string>
-	<string name="ed_total_amount">Totalt belopp (ink. moms):</string>
-	<string name="ed_taxe_rate">Moms:</string>
+	<string name="tv_date">Datum:</string>
+	<string name="tv_description">Beskrivning:</string>
+	<string name="tv_type">Typ:</string>
+	<string name="tv_account">Till/Från konto:</string>
+	<string name="tv_total_amount_inc_tax">Totalt belopp (ink. moms):</string>
+	<string name="tv_total_amount_exc_tax">Totalt belopp (exkl. moms):</string>
+	<string name="tv_tax_rate">Moms:</string>
 	<string name="btn_add_entry">Lägg till händelse</string>
 </resources>
