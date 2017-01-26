@@ -1,4 +1,6 @@
 ﻿using System;
+using SQLite;
+
 namespace BookKeeper
 {
 	class Account
@@ -9,9 +11,10 @@ namespace BookKeeper
 			Number = number;
 		}
 
-		internal string Name { get; private set; }
+		[PrimaryKey]
+		internal int Number { get; set; }
 
-		internal int Number { get; private set; }
+		internal string Name { get; private set; }
 
 		public override string ToString()
 		{

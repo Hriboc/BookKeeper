@@ -1,4 +1,6 @@
 ﻿using System;
+using SQLite;
+
 namespace BookKeeper
 {
 	class TaxRate
@@ -7,6 +9,9 @@ namespace BookKeeper
 		{
 			Rate = rate;	
 		}
+
+		[PrimaryKey, AutoIncrement]
+		internal int Id { get; private set; }
 
 		internal double Rate { get; private set; }
 

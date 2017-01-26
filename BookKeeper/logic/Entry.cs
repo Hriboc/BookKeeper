@@ -1,22 +1,27 @@
 ﻿using System;
+using SQLite;
+
 namespace BookKeeper
 {
 	class Entry
 	{
+		/*
 		Guid id = new Guid();
 		internal long Id
 		{
 			get {return ((long)id.GetHashCode()); }
 		}
-
+		*/
+		[PrimaryKey, AutoIncrement]
+		internal int Id { get; private set; }
 
 		Account incomeOrExpanseAccount;
 		Account moneyAccount;
 		TaxRate taxRate;
 
 		// Account types
-		internal bool IncomeAccount { get; set; }
-		internal bool ExpanseAccount { get; set; }
+		//internal bool IncomeAccount { get; set; }
+		//internal bool ExpanseAccount { get; set; }
 
 		internal string Date { get; set;}
 		internal string Description { get; set;}

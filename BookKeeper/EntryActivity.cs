@@ -82,8 +82,8 @@ namespace BookKeeper
 			// Add income/expanse account
 			string account = (string)spnIncomeOrExpanseAccount.SelectedItem;
 			entry.setIncomeOrExpanseAccount(account);
-			entry.IncomeAccount = rbIncome.Checked;
-			entry.ExpanseAccount = rbExpense.Checked;
+			//entry.IncomeAccount = rbIncome.Checked;
+			//entry.ExpanseAccount = rbExpense.Checked;
 
 			// Add money account
 			account = (string)spnMoneyAccount.SelectedItem;
