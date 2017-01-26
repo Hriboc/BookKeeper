@@ -95,6 +95,11 @@ namespace BookKeeper
 
 			// Add entry to Entry list
 			manager.AddEntry(entry);
+
+			ClearInputTextFields();
+
+			// Notify user
+			Toast.MakeText(this, Resource.String.toast_entry_added, ToastLength.Short).Show();
 		}
 
 		void RadioButtonClick(object sender, EventArgs e)
@@ -157,6 +162,14 @@ namespace BookKeeper
 				etTotalAmountExcTax.Text = TaxRate.CalculateTotalAmountBeforeTax(etTotalAmountIncTax.Text, appyingTax);
 			}
 			else etTotalAmountExcTax.Text = "-";
+		}
+
+		void ClearInputTextFields()
+		{
+			etDate.Text = "";
+			etDesc.Text = "";
+			etTotalAmountIncTax.Text = "";
+			etTotalAmountExcTax.Text = "";
 		}
 	}
 }
