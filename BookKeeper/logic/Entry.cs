@@ -3,9 +3,16 @@ namespace BookKeeper
 {
 	class Entry
 	{
-		private Account incomeOrExpanseAccount;
-		private Account moneyAccount;
-		private TaxRate taxRate;
+		Guid id = new Guid();
+		internal long Id
+		{
+			get {return ((long)id.GetHashCode()); }
+		}
+
+
+		Account incomeOrExpanseAccount;
+		Account moneyAccount;
+		TaxRate taxRate;
 
 		// Account types
 		internal bool IncomeAccount { get; set; }

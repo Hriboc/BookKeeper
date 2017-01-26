@@ -52,6 +52,8 @@
     <Compile Include="Logic\Account.cs" />
     <Compile Include="Logic\Entry.cs" />
     <Compile Include="Logic\BookkeeperManager.cs" />
+    <Compile Include="EntryListActivity.cs" />
+    <Compile Include="Logic\EntriesAdapter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -62,6 +64,8 @@
     <AndroidResource Include="Resources\layout\Main.axml" />
     <AndroidResource Include="Resources\values\Strings.xml" />
     <AndroidResource Include="Resources\layout\Entry.axml" />
+    <AndroidResource Include="Resources\layout\EntryList.axml" />
+    <AndroidResource Include="Resources\layout\EntryListItem.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\mipmap-hdpi\" />

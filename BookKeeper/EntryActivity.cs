@@ -46,19 +46,19 @@ namespace BookKeeper
 			// Get data for the adapter
 			var items = accounts.Select(a => a.ToString()).ToList();
 			// Populate spinner with data
-			initSpinner(spnIncomeOrExpanseAccount, items);
+			InitSpinner(spnIncomeOrExpanseAccount, items);
 
 			// Get data for the adapter
 			items = manager.MoneyAccounts.Select(a => a.ToString()).ToList();
 			// Populate spinner with data
-			initSpinner(spnMoneyAccount, items);
+			InitSpinner(spnMoneyAccount, items);
 
 			// Get data for the adapter
 			items = manager.TaxRates.Select(a => a.ToString()).ToList();
 			// Populate spinner spnTaxRate with data
-			initSpinner(spnTaxRate, items);
+			InitSpinner(spnTaxRate, items);
 
-			// Add listeners
+			// Add event handlers
 			rbIncome.Click += RadioButtonClick;
 			rbExpense.Click += RadioButtonClick;
 			btnAddEntry.Click += ButtonAddEntryClick;
@@ -67,20 +67,10 @@ namespace BookKeeper
 			spnTaxRate.ItemSelected += SpinnerTaxRateItemSelected;
 		}
 
-		private void initSpinner(Spinner spinner, List<string> items)
-		{
-			// Create adapter and bind data
-			var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, items);
-
-			// Feel and look, tror jag =)
-			adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
-
-			// Bind adapter to spinner
-			spinner.Adapter = adapter;
-		}
+		// - Event handlers
 
 		// Creates an entry
-		private void ButtonAddEntryClick(object sender, EventArgs e)
+		void ButtonAddEntryClick(object sender, EventArgs e)
 		{
 			// Create model for entry
 			Entry entry = new Entry();
@@ -107,7 +97,7 @@ namespace BookKeeper
 			manager.AddEntry(entry);
 		}
 
-		private void RadioButtonClick(object sender, EventArgs e)
+		void RadioButtonClick(object sender, EventArgs e)
 		{
 			RadioButton rb = (RadioButton)sender;
 			List<string> items;
@@ -119,10 +109,10 @@ namespace BookKeeper
 			}
 			else items = manager.ExpenseAccounts.Select(a => a.ToString()).ToList();
 
-			initSpinner(spnIncomeOrExpanseAccount, items);
+			InitSpinner(spnIncomeOrExpanseAccount, items);
 		}
 
-		private void EditTextDateClick(object sender, EventArgs e)
+		void EditTextDateClick(object sender, EventArgs e)
 		{
 			// Note: today.Mount returns a value between 1 and 12, but arg monthOfYear is a value between 0 and 11
 			DateTime today = DateTime.Today;
@@ -130,22 +120,36 @@ namespace BookKeeper
 			dialog.Show();
 		}
 
-		private void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
+		void OnDateSet(object sender, DatePickerDialog.DateSetEventArgs e)
 		{
 			etDate.Text = e.Date.ToShortDateString();
 		}
 
-		private void SpinnerTaxRateItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+		void SpinnerTaxRateItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
 		{
 			SetEditTextTotalAmountExcTax();
 		}
 
-		private void EditTextTotalAmountIncTaxTextChanged(object sender, TextChangedEventArgs e)
+		void EditTextTotalAmountIncTaxTextChanged(object sender, TextChangedEventArgs e)
 		{
 			SetEditTextTotalAmountExcTax();
 		}
 
-		private void SetEditTextTotalAmountExcTax()
+		// - Help methods
+
+		void InitSpinner(Spinner spinner, List<string> items)
+		{
+			// Create adapter and bind data
+			var adapter = new ArrayAdapter<string>(this, Android.Resource.Layout.SimpleSpinnerItem, items);
+
+			// Feel and look, tror jag =)
+			adapter.SetDropDownViewResource(Android.Resource.Layout.SimpleSpinnerDropDownItem);
+
+			// Bind adapter to spinner
+			spinner.Adapter = adapter;
+		}
+
+		void SetEditTextTotalAmountExcTax()
 		{
 			if (!string.IsNullOrEmpty(etTotalAmountIncTax.Text))
 			{

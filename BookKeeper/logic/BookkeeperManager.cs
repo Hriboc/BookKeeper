@@ -8,11 +8,11 @@ namespace BookKeeper
 		// Singelton
 		private static BookkeeperManager instance = null;
 
-		private IList<Account> incomeAccounts = new List<Account>();
-		private IList<Account> expenseAccounts = new List<Account>();
-		private IList<Account> moneyAccounts = new List<Account>();
-		private IList<TaxRate> taxRates = new List<TaxRate>();
-		private IList<Entry> entries = new List<Entry>();
+		IList<Account> incomeAccounts = new List<Account>();
+		IList<Account> expenseAccounts = new List<Account>();
+		IList<Account> moneyAccounts = new List<Account>();
+		IList<TaxRate> taxRates = new List<TaxRate>();
+		IList<Entry> entries = new List<Entry>();
 
 		private BookkeeperManager()
 		{
@@ -81,6 +81,11 @@ namespace BookKeeper
 		internal void AddEntry(Entry e)
 		{
 			entries.Add(e);
+		}
+
+		internal IList<Entry> GetEntries()
+		{
+			return entries;
 		}
 	}
 }
