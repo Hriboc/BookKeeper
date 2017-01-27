@@ -3,32 +3,23 @@ using SQLite;
 
 namespace BookKeeper
 {
-	class TaxRate
+	public class TaxRate
 	{
+		public TaxRate() {}
+
 		internal TaxRate(double rate)
 		{
 			Rate = rate;	
 		}
 
 		[PrimaryKey, AutoIncrement]
-		internal int Id { get; private set; }
+		public int Id { get; private set; }
 
-		internal double Rate { get; private set; }
+		public double Rate { get; set; }
 
 		public override string ToString()
 		{
 			return Rate + "%";
-		}
-
-		// Formel för marginalmoms: M = P/(1+P)
-		internal static string CalculateTotalAmountBeforeTax(string totalAmount, string applyingTax)
-		{
-			double totalAmountIncTax = double.Parse(totalAmount);
-			double applTax = double.Parse(applyingTax.Remove(applyingTax.IndexOf('%'))) * 0.01;
-			double marginTax = applTax / (1 + applTax);
-			double totalAmountExcTax = totalAmountIncTax * (1 - marginTax);
-
-			return totalAmountExcTax.ToString();
 		}
 	}
 }

@@ -54,7 +54,7 @@ namespace BookKeeper
 			InitSpinner(spnMoneyAccount, items);
 
 			// Get data for the adapter
-			items = manager.TaxRates.Select(a => a.ToString()).ToList();
+			items = manager.TaxRates.Select(t => t.ToString()).ToList();
 			// Populate spinner spnTaxRate with data
 			InitSpinner(spnTaxRate, items);
 
@@ -75,25 +75,20 @@ namespace BookKeeper
 			// Create model for entry
 			Entry entry = new Entry();
 
-			entry.Date = etDate.Text;
+			entry.Date = DateTime.Parse(etDate.Text);
 			entry.Description = etDesc.Text;
-			entry.TotalAmount = etTotalAmountIncTax.Text;
+			entry.TotalAmount = double.Parse(etTotalAmountIncTax.Text);
 
 			// Add income/expanse account
-			string account = (string)spnIncomeOrExpanseAccount.SelectedItem;
-			entry.setIncomeOrExpanseAccount(account);
-			//entry.IncomeAccount = rbIncome.Checked;
-			//entry.ExpanseAccount = rbExpense.Checked;
+			entry.IncomeOrExpanseAccount = (string)spnIncomeOrExpanseAccount.SelectedItem;
 
 			// Add money account
-			account = (string)spnMoneyAccount.SelectedItem;
-			entry.setMoneyAccount(account);
+			entry.MoneyAccount = (string)spnMoneyAccount.SelectedItem;
 
 			// Add tax rate
-			string rate = (string)spnTaxRate.SelectedItem;
-			entry.setTaxRate(rate);
+			entry.TaxRate = Helper.ParseTaxRate((string)spnTaxRate.SelectedItem);
 
-			// Add entry to Entry list
+			// Add entry to database
 			manager.AddEntry(entry);
 
 			ClearInputTextFields();
@@ -105,16 +100,16 @@ namespace BookKeeper
 		void RadioButtonClick(object sender, EventArgs e)
 		{
 			RadioButton rb = (RadioButton)sender;
-			List<string> items;
+			List<string> accounts;
 
 			// Get income or expense accounts, depending on radio button selected
 			if (rb.Id == Resource.Id.rb_income)
 			{
-				items = manager.IncomeAccounts.Select(a => a.ToString()).ToList();
+				accounts = manager.IncomeAccounts.Select(a => a.ToString()).ToList();
 			}
-			else items = manager.ExpenseAccounts.Select(a => a.ToString()).ToList();
+			else accounts = manager.ExpenseAccounts.Select(a => a.ToString()).ToList();
 
-			InitSpinner(spnIncomeOrExpanseAccount, items);
+			InitSpinner(spnIncomeOrExpanseAccount, accounts);
 		}
 
 		void EditTextDateClick(object sender, EventArgs e)
@@ -159,7 +154,7 @@ namespace BookKeeper
 			if (!string.IsNullOrEmpty(etTotalAmountIncTax.Text))
 			{
 				string appyingTax = (string)spnTaxRate.SelectedItem;
-				etTotalAmountExcTax.Text = TaxRate.CalculateTotalAmountBeforeTax(etTotalAmountIncTax.Text, appyingTax);
+				etTotalAmountExcTax.Text = Helper.CalculateTotalAmountBeforeTax(etTotalAmountIncTax.Text, appyingTax);
 			}
 			else etTotalAmountExcTax.Text = "-";
 		}

@@ -60,6 +60,7 @@
     <Compile Include="Logic\BookkeeperManager.cs" />
     <Compile Include="EntryListActivity.cs" />
     <Compile Include="Logic\EntriesAdapter.cs" />
+    <Compile Include="Logic\Helper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

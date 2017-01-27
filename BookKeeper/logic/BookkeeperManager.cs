@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using SQLite;
+using System.IO;
 
 namespace BookKeeper
 {
@@ -11,17 +13,11 @@ namespace BookKeeper
 
 		SQLiteConnection db;
 
-		IList<Account> incomeAccounts = new List<Account>();
-		IList<Account> expenseAccounts = new List<Account>();
-		IList<Account> moneyAccounts = new List<Account>();
-		IList<TaxRate> taxRates = new List<TaxRate>();
-		IList<Entry> entries = new List<Entry>();
-
 		private BookkeeperManager()
 		{
 			// Create connection to database
 			string dirPath = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-			db = new SQLiteConnection(dirPath + @"\bookkeeper.db");
+			db = new SQLiteConnection(dirPath + Path.DirectorySeparatorChar + "bookkeeper.db");
 
 			// Create tables
 			db.CreateTable<TaxRate>();
@@ -29,39 +25,29 @@ namespace BookKeeper
 			db.CreateTable<Entry>();
 
 			// Create tax rates
-			taxRates.Add(new TaxRate(6));
-			taxRates.Add(new TaxRate(12));
-			taxRates.Add(new TaxRate(25));
+			if (db.Table<TaxRate>().Count() == 0)
+			{
+				db.Insert(new TaxRate(6));
+				db.Insert(new TaxRate(12));
+				db.Insert(new TaxRate(25));
+			}
 
-			// Create income accounts
-			incomeAccounts.Add(new Account("Försäljning varor", 3010));
-			incomeAccounts.Add(new Account("Försäljning tjänster varor", 3310));
+			if (db.Table<Account>().Count() == 0)
+			{
+				// Create income accounts
+				db.Insert(new Account("Försäljning varor", 3010, Account.INCOME));
+				db.Insert(new Account("Försäljning tjänster varor", 3310, Account.INCOME));
 
-			// Create expence accounts
-			expenseAccounts.Add(new Account("Inköp", 4010));
-			expenseAccounts.Add(new Account("Förbrukningsmaterial", 5460));
-			expenseAccounts.Add(new Account("Mobiltelefon", 6212));
+				// Create expence accounts
+				db.Insert(new Account("Inköp", 4010, Account.EXPANSE));
+				db.Insert(new Account("Förbrukningsmaterial", 5460, Account.EXPANSE));
+				db.Insert(new Account("Mobiltelefon", 6212, Account.EXPANSE));
 
-			// Create money accounts
-			moneyAccounts.Add(new Account("Kassa", 1910));
-			moneyAccounts.Add(new Account("Placeringskonto", 1940));
-			moneyAccounts.Add(new Account("Egna Insättningar", 2018));
-
-			// Insert tax rates
-			db.InsertAll(taxRates);
-
-			// Insert income accounts
-			db.InsertAll(incomeAccounts);
-
-			// Insert expence accounts
-			db.InsertAll(expenseAccounts);
-
-			// Insert money accounts
-			db.InsertAll(moneyAccounts);
-
-
-
-
+				// Create money accounts
+				db.Insert(new Account("Kassa", 1910, Account.MONEY));
+				db.Insert(new Account("Placeringskonto", 1940, Account.MONEY));
+				db.Insert(new Account("Egna Insättningar", 2018, Account.MONEY));
+			}
 		}
 
 		internal static BookkeeperManager Instance
@@ -78,7 +64,9 @@ namespace BookKeeper
 		{
 			get
 			{
-				return incomeAccounts;
+				return db.Table<Account>()
+					     .Where(a => a.Type == Account.INCOME)
+						 .ToList();
 			}
 		}
 
@@ -86,7 +74,9 @@ namespace BookKeeper
 		{
 			get
 			{
-				return expenseAccounts;
+				return db.Table<Account>()
+					     .Where(a => a.Type == Account.EXPANSE)
+						 .ToList();
 			}
 		}
 
@@ -94,7 +84,9 @@ namespace BookKeeper
 		{
 			get
 			{
-				return moneyAccounts;
+				return db.Table<Account>()
+					     .Where(a => a.Type == Account.MONEY)
+					     .ToList();
 			}
 		}
 
@@ -102,18 +94,18 @@ namespace BookKeeper
 		{
 			get
 			{
-				return taxRates;
+				return db.Table<TaxRate>().ToList();
 			}
 		}
 
 		internal void AddEntry(Entry e)
 		{
-			entries.Add(e);
+			db.Insert(e);
 		}
 
 		internal IList<Entry> GetEntries()
 		{
-			return entries;
+			return db.Table<Entry>().ToList();
 		}
 	}
 }

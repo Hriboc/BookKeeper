@@ -3,22 +3,32 @@ using SQLite;
 
 namespace BookKeeper
 {
-	class Account
+	public class Account
 	{
-		internal Account(string name, int number)
+		// Account types
+		internal const int INCOME = 1;
+		internal const int EXPANSE = 2;
+		internal const int MONEY = 3;
+
+		public Account() { }
+
+		internal Account(string name, int number, int type)
 		{
 			Name = name;
 			Number = number;
+			Type = type;
 		}
 
 		[PrimaryKey]
-		internal int Number { get; set; }
+		public int Number { get; set; }
 
-		internal string Name { get; private set; }
+		public string Name { get; set; }
+
+		public int Type { get; set; }
 
 		public override string ToString()
 		{
-			return Name + " (" + Number + ")";
+			return string.Format("{0} ({1})", Name, Number);;
 		}
 	}
 }

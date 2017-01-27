@@ -16,41 +16,7 @@ namespace BookKeeper
 		public EntriesAdapter(Activity activity)
 		{
 			this.activity = activity;
-			FillEntries();
-		}
-
-		void FillEntries()
-		{
-			/*
-			var uri = ContactsContract.Contacts.ContentUri;
-
-			string[] projection = {
-				ContactsContract.Contacts.InterfaceConsts.Id,
-				ContactsContract.Contacts.InterfaceConsts.DisplayName,
-				ContactsContract.Contacts.InterfaceConsts.PhotoId
-			};
-
-			var cursor = activity.Q(uri, projection, null,
-				null, null);
-			*/
 			entries = BookkeeperManager.Instance.GetEntries();
-			/*
-			if (cursor.MoveToFirst())
-			{
-				do
-				{
-					_contactList.Add(new Contact
-					{
-						Id = cursor.GetLong(
-					cursor.GetColumnIndex(projection[0])),
-						DisplayName = cursor.GetString(
-					cursor.GetColumnIndex(projection[1])),
-						PhotoId = cursor.GetString(
-					cursor.GetColumnIndex(projection[2]))
-					});
-				} while (cursor.MoveToNext());
-			}
-			*/
 		}
 
 		public override int Count
@@ -58,9 +24,10 @@ namespace BookKeeper
 			get { return entries.Count; }
 		}
 
+		// Its not used
 		public override Java.Lang.Object GetItem(int position)
 		{
-			// could wrap an Entry in a Java.Lang.Object
+			// could wrap an entry in a Java.Lang.Object
 			// to return it here if needed
 			return null;
 		}
@@ -75,13 +42,13 @@ namespace BookKeeper
 			var view = convertView ?? activity.LayoutInflater.Inflate(
 				Resource.Layout.EntryListItem, parent, false);
 
-			var date = view.FindViewById<TextView>(Resource.Id.tv_item1);
-			var description = view.FindViewById<TextView>(Resource.Id.tv_item2);
-			var amount = view.FindViewById<TextView>(Resource.Id.tv_item3);
+			var etDate = view.FindViewById<TextView>(Resource.Id.tv_item1);
+			var etDesc = view.FindViewById<TextView>(Resource.Id.tv_item2);
+			var etAmount = view.FindViewById<TextView>(Resource.Id.tv_item3);
 
-			date.Text = entries[position].Date;
-			description.Text = entries[position].Description;
-			amount.Text = entries[position].TotalAmount + " kr";
+			etDate.Text = entries[position].Date.ToShortDateString();
+			etDesc.Text = entries[position].Description;
+			etAmount.Text = string.Format("{0} kr",entries[position].TotalAmount);
 
 			return view;
 		}
