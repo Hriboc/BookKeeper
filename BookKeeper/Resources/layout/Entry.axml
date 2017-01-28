@@ -127,7 +127,8 @@
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/et_total_amount_exc_tax" />
+            android:id="@+id/et_total_amount_exc_tax"
+            android:enabled="false" />
     </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"

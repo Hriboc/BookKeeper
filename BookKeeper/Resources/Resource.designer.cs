@@ -199,8 +199,8 @@ namespace BookKeeper
 			// aapt resource value: 0x7f03000f
 			public const int btn_update_entry = 2130903055;
 			
-			// aapt resource value: 0x7f030012
-			public const int currency = 2130903058;
+			// aapt resource value: 0x7f030013
+			public const int currency = 2130903059;
 			
 			// aapt resource value: 0x7f030006
 			public const int rb_expense = 2130903046;
@@ -213,6 +213,9 @@ namespace BookKeeper
 			
 			// aapt resource value: 0x7f030011
 			public const int toast_entry_updated = 2130903057;
+			
+			// aapt resource value: 0x7f030012
+			public const int toast_user_input_error = 2130903058;
 			
 			// aapt resource value: 0x7f03000a
 			public const int tv_account = 2130903050;

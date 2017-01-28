@@ -24,6 +24,7 @@
 	<!-- Toast messages -->
 	<string name="toast_entry_added">Händelse inlagd</string>
 	<string name="toast_entry_updated">Händelse uppdaterad</string>
+	<string name="toast_user_input_error">Saknar eller Fel inmatning</string>
 
 	<!-- Misc -->
 	<string name="currency">kr</string>

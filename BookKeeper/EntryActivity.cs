@@ -16,6 +16,8 @@ namespace BookKeeper
 	[Activity(Label = "EntryActivity")]
 	public class EntryActivity : Activity
 	{
+		bool editable;
+		Entry existingEntry;
 		BookkeeperManager manager = BookkeeperManager.Instance;
 
 		RadioButton rbIncome, rbExpense;
@@ -30,7 +32,7 @@ namespace BookKeeper
 			SetContentView(Resource.Layout.Entry);
 
 			// Get references to widgets
-			rbIncome = FindViewById<RadioButton>(Resource.Id.rb_income);
+			rbIncome = FindViewById<RadioButton>(Resource.Id.rb_income); // default checket
 			rbExpense = FindViewById<RadioButton>(Resource.Id.rb_expense);
 			etDate = FindViewById<EditText>(Resource.Id.et_date);
 			etDesc = FindViewById<EditText>(Resource.Id.et_description);
@@ -41,6 +43,18 @@ namespace BookKeeper
 			spnTaxRate = FindViewById<Spinner>(Resource.Id.spn_tax_rate);
 			Button btnAddEntry = FindViewById<Button>(Resource.Id.btn_add_entry);
 
+			// Tells if this activity should be in edit mode
+			editable = Intent.GetBooleanExtra(Helper.EXTRA_EDIT_MODE, false);
+
+			if (editable)
+			{
+				int id = Intent.GetIntExtra(Helper.EXTRA_ENTRY_ID, -1);
+				existingEntry = manager.GetEntry(id);
+
+				rbExpense.Checked = (manager.ExpenseAccounts
+									.Select(a => a.ToString()))
+									.Contains(existingEntry.IncomeOrExpanseAccount);
+			}
 			// Get data for the adapter and populate spnIncomeOrExpanseAccount with data
 			var accounts = (rbIncome.Checked) ? manager.IncomeAccounts : manager.ExpenseAccounts;
 			var items = accounts.Select(a => a.ToString()).ToList();
@@ -62,34 +76,26 @@ namespace BookKeeper
 			etTotalAmountIncTax.TextChanged += EditTextTotalAmountIncTaxTextChanged;
 			spnTaxRate.ItemSelected += SpinnerTaxRateItemSelected;
 
-			bool editable = Intent.GetBooleanExtra(Helper.EXTRA_EDIT_MODE, false);
 			if (editable)
 			{
-				int id = Intent.GetIntExtra(Helper.EXTRA_ENTRY_ID, -1);
-				Entry entry = manager.GetEntry(id);
-
-				rbExpense.Checked = (manager.ExpenseAccounts
-				                    .Select(a => a.ToString()))
-									.Contains(entry.IncomeOrExpanseAccount);
-
-				etDate.Text = entry.Date.ToShortDateString();
-				etDesc.Text = entry.Description;
-				etTotalAmountIncTax.Text = entry.TotalAmount.ToString();
+				etDate.Text = existingEntry.Date.ToShortDateString();
+				etDesc.Text = existingEntry.Description;
+				etTotalAmountIncTax.Text = existingEntry.TotalAmount.ToString();
 
 				// Set the item to be displayed in spnIncomeOrExpanseAccount
 				spnIncomeOrExpanseAccount.SetSelection(((ArrayAdapter<string>)spnIncomeOrExpanseAccount
 				                                        .Adapter)
-													   	.GetPosition(entry.IncomeOrExpanseAccount));
+													   	.GetPosition(existingEntry.IncomeOrExpanseAccount));
 
 				// Set the item to be displayed in spnMoneyAccount 
 				spnMoneyAccount.SetSelection(((ArrayAdapter<string>)spnMoneyAccount
 				                              	.Adapter)
-											 	.GetPosition(entry.MoneyAccount));
+											 	.GetPosition(existingEntry.MoneyAccount));
 
 				// Set the item to be displayed in spnTaxRate 
 				spnTaxRate.SetSelection(((ArrayAdapter<string>)spnTaxRate
 				                         .Adapter)
-										 .GetPosition(new TaxRate(entry.TaxRate).ToString()));
+										 .GetPosition(new TaxRate(existingEntry.TaxRate).ToString()));
 				// Change label of button to update
 				btnAddEntry.Text = GetString(Resource.String.btn_update_entry);
 			}
@@ -97,45 +103,41 @@ namespace BookKeeper
 
 		// - Event handlers
 
-		// Creates an entry
+		// Creates or Updates an entry
 		void ButtonAddEntryClick(object sender, EventArgs e)
 		{
 			Entry entry;
 
-			bool editable = Intent.GetBooleanExtra(Helper.EXTRA_EDIT_MODE, false);
 			if (editable)
-			{
-				// Need Entry Id for updating
-				int id = Intent.GetIntExtra(Helper.EXTRA_ENTRY_ID, -1);
-				entry = manager.GetEntry(id);
-			}
+				entry = existingEntry;
 			else entry = new Entry();
 
-			entry.Date = DateTime.Parse(etDate.Text);
-			entry.Description = etDesc.Text;
-			entry.TotalAmount = double.Parse(etTotalAmountIncTax.Text);
+			try
+			{
+				entry.Date = DateTime.Parse(etDate.Text);
+				entry.Description = etDesc.Text;
+				entry.TotalAmount = double.Parse(etTotalAmountIncTax.Text);
+			}
+			catch (Exception ex)
+			{
+				MakeToast(Resource.String.toast_user_input_error);
+				return;
+			}
 
 			entry.IncomeOrExpanseAccount = (string)spnIncomeOrExpanseAccount.SelectedItem;
 			entry.MoneyAccount = (string)spnMoneyAccount.SelectedItem;
 			entry.TaxRate = Helper.ParseTaxRate((string)spnTaxRate.SelectedItem);
 
-			string toastMsg;
 			if (editable)
 			{
 				manager.UpdateEntry(entry);
-				toastMsg = GetString(Resource.String.toast_entry_updated);
-				// Poppa stacken
-
-				// uppdatera Entry List Activity / EntriesAdapter
+				MakeToast(Resource.String.toast_entry_updated);
 			}
 			else
 			{
 				manager.AddEntry(entry);
-				toastMsg = GetString(Resource.String.toast_entry_added);
-				ClearInputTextFields();
+				MakeToast(Resource.String.toast_entry_added);
 			}
-			// Notify user
-			Toast.MakeText(this, toastMsg, ToastLength.Short).Show();
 
 			this.Finish();
 		}
@@ -202,12 +204,9 @@ namespace BookKeeper
 			else etTotalAmountExcTax.Text = "-";
 		}
 
-		void ClearInputTextFields()
+		void MakeToast(int messageId)
 		{
-			etDate.Text = "";
-			etDesc.Text = "";
-			etTotalAmountIncTax.Text = "";
-			etTotalAmountExcTax.Text = "";
+			Toast.MakeText(this, messageId, ToastLength.Short).Show();
 		}
 	}
 }
