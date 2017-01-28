@@ -26,6 +26,19 @@ namespace BookKeeper
 			var adapter = new EntriesAdapter(this);
 			var lvEntries = FindViewById<ListView>(Resource.Id.lv_entries);
 			lvEntries.Adapter = adapter;
+
+			lvEntries.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
+			{
+				// int id = (int) lvEntries.GetItemIdAtPosition(e.Position);
+				int id = (int)lvEntries.Adapter.GetItemId(e.Position);
+
+				// Bättre att skicka med Id:t till entryactivity och hämna entry där
+				// Entry entry = BookkeeperManager.Instance.GetEntry(id);
+
+				Intent entryActivity = new Intent(this, typeof(EntryActivity));
+				entryActivity.PutExtra("entryId", id);
+				StartActivity(entryActivity);
+			};
 		}
 	}
 }

@@ -41,22 +41,65 @@ namespace BookKeeper
 			spnTaxRate = FindViewById<Spinner>(Resource.Id.spn_tax_rate);
 			Button btnAddEntry = FindViewById<Button>(Resource.Id.btn_add_entry);
 
-			// Get income or expense accounts, depending on selected radio button
-			var accounts = (rbIncome.Checked) ? manager.IncomeAccounts : manager.ExpenseAccounts;
-			// Get data for the adapter
-			var items = accounts.Select(a => a.ToString()).ToList();
-			// Populate spinner with data
-			InitSpinner(spnIncomeOrExpanseAccount, items);
+			// Check intent extra for <Entry>Id. If its there get the Entry from db 
+			// so user can edit it. Otherwise its a new Entry.
+			int id = Intent.GetIntExtra("entryId", -1);
 
-			// Get data for the adapter
-			items = manager.MoneyAccounts.Select(a => a.ToString()).ToList();
-			// Populate spinner with data
-			InitSpinner(spnMoneyAccount, items);
+			// If id found
+			if (id != -1)
+			{
+				Entry entry = manager.GetEntry(id);
+				// TODO: Set radio button
+				rbIncome.Checked = (manager.IncomeAccounts.Select(a => a.ToString())).Contains(entry.IncomeOrExpanseAccount);
+				rbExpense.Checked = !rbIncome.Checked;
+				etDate.Text = entry.Date.ToShortDateString();
+				etDesc.Text = entry.Description;
+				etTotalAmountIncTax.Text = entry.TotalAmount.ToString();
 
-			// Get data for the adapter
-			items = manager.TaxRates.Select(t => t.ToString()).ToList();
-			// Populate spinner spnTaxRate with data
-			InitSpinner(spnTaxRate, items);
+				// Get income or expense accounts, depending on selected radio button
+				var acc = (rbIncome.Checked) ? manager.IncomeAccounts : manager.ExpenseAccounts;
+				// Get data for the adapter
+				var ite = acc.Select(a => a.ToString()).ToList();
+				// Populate spinner with data
+				InitSpinner(spnIncomeOrExpanseAccount, ite);
+				spnIncomeOrExpanseAccount.SetSelection(((ArrayAdapter<string>)spnIncomeOrExpanseAccount.Adapter)
+													   .GetPosition(entry.IncomeOrExpanseAccount));
+
+				// Get data for the adapter
+				ite = manager.MoneyAccounts.Select(a => a.ToString()).ToList();
+				// Populate spinner spnMoneyAccount with data
+				InitSpinner(spnMoneyAccount, ite);
+				spnMoneyAccount.SetSelection(((ArrayAdapter<string>)spnMoneyAccount.Adapter)
+											 .GetPosition(entry.MoneyAccount));
+
+
+				// Get data for the adapter
+				ite = manager.TaxRates.Select(t => t.ToString()).ToList();
+				// Populate spinner spnTaxRate with data
+				InitSpinner(spnTaxRate, ite);
+				spnTaxRate.SetSelection(((ArrayAdapter<string>)spnTaxRate.Adapter)
+										.GetPosition(new TaxRate(entry.TaxRate).ToString()));
+
+			}
+			else {
+				// Get income or expense accounts, depending on selected radio button
+				var accounts = (rbIncome.Checked) ? manager.IncomeAccounts : manager.ExpenseAccounts;
+				// Get data for the adapter
+				var items = accounts.Select(a => a.ToString()).ToList();
+				// Populate spinner with data
+				InitSpinner(spnIncomeOrExpanseAccount, items);
+
+				// Get data for the adapter
+				items = manager.MoneyAccounts.Select(a => a.ToString()).ToList();
+				// Populate spinner spnMoneyAccount with data
+				InitSpinner(spnMoneyAccount, items);
+
+				// Get data for the adapter
+				items = manager.TaxRates.Select(t => t.ToString()).ToList();
+				// Populate spinner spnTaxRate with data
+				InitSpinner(spnTaxRate, items);
+
+			}
 
 			// Add event handlers
 			rbIncome.Click += RadioButtonClick;

@@ -107,5 +107,10 @@ namespace BookKeeper
 		{
 			return db.Table<Entry>().ToList();
 		}
+
+		internal Entry GetEntry(int id)
+		{
+			return db.Get<Entry>(id);
+		}
 	}
 }
