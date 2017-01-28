@@ -41,65 +41,18 @@ namespace BookKeeper
 			spnTaxRate = FindViewById<Spinner>(Resource.Id.spn_tax_rate);
 			Button btnAddEntry = FindViewById<Button>(Resource.Id.btn_add_entry);
 
-			// Check intent extra for <Entry>Id. If its there get the Entry from db 
-			// so user can edit it. Otherwise its a new Entry.
-			int id = Intent.GetIntExtra("entryId", -1);
+			// Get data for the adapter and populate spnIncomeOrExpanseAccount with data
+			var accounts = (rbIncome.Checked) ? manager.IncomeAccounts : manager.ExpenseAccounts;
+			var items = accounts.Select(a => a.ToString()).ToList();
+			InitSpinner(spnIncomeOrExpanseAccount, items);
 
-			// If id found
-			if (id != -1)
-			{
-				Entry entry = manager.GetEntry(id);
-				// TODO: Set radio button
-				rbIncome.Checked = (manager.IncomeAccounts.Select(a => a.ToString())).Contains(entry.IncomeOrExpanseAccount);
-				rbExpense.Checked = !rbIncome.Checked;
-				etDate.Text = entry.Date.ToShortDateString();
-				etDesc.Text = entry.Description;
-				etTotalAmountIncTax.Text = entry.TotalAmount.ToString();
+			// Get data for the adapter and populate spnMoneyAccount with data
+			items = manager.MoneyAccounts.Select(a => a.ToString()).ToList();
+			InitSpinner(spnMoneyAccount, items);
 
-				// Get income or expense accounts, depending on selected radio button
-				var acc = (rbIncome.Checked) ? manager.IncomeAccounts : manager.ExpenseAccounts;
-				// Get data for the adapter
-				var ite = acc.Select(a => a.ToString()).ToList();
-				// Populate spinner with data
-				InitSpinner(spnIncomeOrExpanseAccount, ite);
-				spnIncomeOrExpanseAccount.SetSelection(((ArrayAdapter<string>)spnIncomeOrExpanseAccount.Adapter)
-													   .GetPosition(entry.IncomeOrExpanseAccount));
-
-				// Get data for the adapter
-				ite = manager.MoneyAccounts.Select(a => a.ToString()).ToList();
-				// Populate spinner spnMoneyAccount with data
-				InitSpinner(spnMoneyAccount, ite);
-				spnMoneyAccount.SetSelection(((ArrayAdapter<string>)spnMoneyAccount.Adapter)
-											 .GetPosition(entry.MoneyAccount));
-
-
-				// Get data for the adapter
-				ite = manager.TaxRates.Select(t => t.ToString()).ToList();
-				// Populate spinner spnTaxRate with data
-				InitSpinner(spnTaxRate, ite);
-				spnTaxRate.SetSelection(((ArrayAdapter<string>)spnTaxRate.Adapter)
-										.GetPosition(new TaxRate(entry.TaxRate).ToString()));
-
-			}
-			else {
-				// Get income or expense accounts, depending on selected radio button
-				var accounts = (rbIncome.Checked) ? manager.IncomeAccounts : manager.ExpenseAccounts;
-				// Get data for the adapter
-				var items = accounts.Select(a => a.ToString()).ToList();
-				// Populate spinner with data
-				InitSpinner(spnIncomeOrExpanseAccount, items);
-
-				// Get data for the adapter
-				items = manager.MoneyAccounts.Select(a => a.ToString()).ToList();
-				// Populate spinner spnMoneyAccount with data
-				InitSpinner(spnMoneyAccount, items);
-
-				// Get data for the adapter
-				items = manager.TaxRates.Select(t => t.ToString()).ToList();
-				// Populate spinner spnTaxRate with data
-				InitSpinner(spnTaxRate, items);
-
-			}
+			// Get data for the adapter and populate spnTaxRate with data
+			items = manager.TaxRates.Select(t => t.ToString()).ToList();
+			InitSpinner(spnTaxRate, items);
 
 			// Add event handlers
 			rbIncome.Click += RadioButtonClick;
@@ -108,6 +61,38 @@ namespace BookKeeper
 			etDate.Click += EditTextDateClick;
 			etTotalAmountIncTax.TextChanged += EditTextTotalAmountIncTaxTextChanged;
 			spnTaxRate.ItemSelected += SpinnerTaxRateItemSelected;
+
+			bool editable = Intent.GetBooleanExtra(Helper.EXTRA_EDIT_MODE, false);
+			if (editable)
+			{
+				int id = Intent.GetIntExtra(Helper.EXTRA_ENTRY_ID, -1);
+				Entry entry = manager.GetEntry(id);
+
+				rbExpense.Checked = (manager.ExpenseAccounts
+				                    .Select(a => a.ToString()))
+									.Contains(entry.IncomeOrExpanseAccount);
+
+				etDate.Text = entry.Date.ToShortDateString();
+				etDesc.Text = entry.Description;
+				etTotalAmountIncTax.Text = entry.TotalAmount.ToString();
+
+				// Set the item to be displayed in spnIncomeOrExpanseAccount
+				spnIncomeOrExpanseAccount.SetSelection(((ArrayAdapter<string>)spnIncomeOrExpanseAccount
+				                                        .Adapter)
+													   	.GetPosition(entry.IncomeOrExpanseAccount));
+
+				// Set the item to be displayed in spnMoneyAccount 
+				spnMoneyAccount.SetSelection(((ArrayAdapter<string>)spnMoneyAccount
+				                              	.Adapter)
+											 	.GetPosition(entry.MoneyAccount));
+
+				// Set the item to be displayed in spnTaxRate 
+				spnTaxRate.SetSelection(((ArrayAdapter<string>)spnTaxRate
+				                         .Adapter)
+										 .GetPosition(new TaxRate(entry.TaxRate).ToString()));
+				// Change label of button to update
+				btnAddEntry.Text = GetString(Resource.String.btn_update_entry);
+			}
 		}
 
 		// - Event handlers
@@ -115,29 +100,44 @@ namespace BookKeeper
 		// Creates an entry
 		void ButtonAddEntryClick(object sender, EventArgs e)
 		{
-			// Create model for entry
-			Entry entry = new Entry();
+			Entry entry;
+
+			bool editable = Intent.GetBooleanExtra(Helper.EXTRA_EDIT_MODE, false);
+			if (editable)
+			{
+				// Need Entry Id for updating
+				int id = Intent.GetIntExtra(Helper.EXTRA_ENTRY_ID, -1);
+				entry = manager.GetEntry(id);
+			}
+			else entry = new Entry();
 
 			entry.Date = DateTime.Parse(etDate.Text);
 			entry.Description = etDesc.Text;
 			entry.TotalAmount = double.Parse(etTotalAmountIncTax.Text);
 
-			// Add income/expanse account
 			entry.IncomeOrExpanseAccount = (string)spnIncomeOrExpanseAccount.SelectedItem;
-
-			// Add money account
 			entry.MoneyAccount = (string)spnMoneyAccount.SelectedItem;
-
-			// Add tax rate
 			entry.TaxRate = Helper.ParseTaxRate((string)spnTaxRate.SelectedItem);
 
-			// Add entry to database
-			manager.AddEntry(entry);
+			string toastMsg;
+			if (editable)
+			{
+				manager.UpdateEntry(entry);
+				toastMsg = GetString(Resource.String.toast_entry_updated);
+				// Poppa stacken
 
-			ClearInputTextFields();
-
+				// uppdatera Entry List Activity / EntriesAdapter
+			}
+			else
+			{
+				manager.AddEntry(entry);
+				toastMsg = GetString(Resource.String.toast_entry_added);
+				ClearInputTextFields();
+			}
 			// Notify user
-			Toast.MakeText(this, Resource.String.toast_entry_added, ToastLength.Short).Show();
+			Toast.MakeText(this, toastMsg, ToastLength.Short).Show();
+
+			this.Finish();
 		}
 
 		void RadioButtonClick(object sender, EventArgs e)

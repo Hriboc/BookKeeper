@@ -103,6 +103,11 @@ namespace BookKeeper
 			db.Insert(e);
 		}
 
+		internal void UpdateEntry(Entry e)
+		{
+			db.Update(e);
+		}
+
 		internal IList<Entry> GetEntries()
 		{
 			return db.Table<Entry>().ToList();

@@ -23,9 +23,8 @@ namespace BookKeeper
 			// Set our view from the "EntryList" layout resource
 			SetContentView(Resource.Layout.EntryList);
 
-			var adapter = new EntriesAdapter(this);
 			var lvEntries = FindViewById<ListView>(Resource.Id.lv_entries);
-			lvEntries.Adapter = adapter;
+			lvEntries.Adapter = new EntriesAdapter(this);
 
 			lvEntries.ItemClick += (object sender, AdapterView.ItemClickEventArgs e) =>
 			{
@@ -36,9 +35,21 @@ namespace BookKeeper
 				// Entry entry = BookkeeperManager.Instance.GetEntry(id);
 
 				Intent entryActivity = new Intent(this, typeof(EntryActivity));
-				entryActivity.PutExtra("entryId", id);
+				entryActivity.PutExtra(Helper.EXTRA_EDIT_MODE, true);
+				entryActivity.PutExtra(Helper.EXTRA_ENTRY_ID, id);
 				StartActivity(entryActivity);
 			};
+		}
+
+		protected override void OnResume()
+		{
+			base.OnResume();
+
+			// Reload Adapter data source
+			var lvEntries = FindViewById<ListView>(Resource.Id.lv_entries);
+			var adapter = (EntriesAdapter)lvEntries.Adapter;
+			adapter.LoadDataSource();
+			adapter.NotifyDataSetChanged();
 		}
 	}
 }

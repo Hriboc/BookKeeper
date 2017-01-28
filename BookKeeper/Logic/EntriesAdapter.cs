@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+
 using Android.App;
 using Android.Content;
 using Android.Provider;
@@ -16,7 +18,7 @@ namespace BookKeeper
 		public EntriesAdapter(Activity activity)
 		{
 			this.activity = activity;
-			entries = BookkeeperManager.Instance.GetEntries();
+			LoadDataSource();
 		}
 
 		public override int Count
@@ -48,9 +50,19 @@ namespace BookKeeper
 
 			etDate.Text = entries[position].Date.ToShortDateString();
 			etDesc.Text = entries[position].Description;
-			etAmount.Text = string.Format("{0} kr",entries[position].TotalAmount);
+
+			string currency = activity.GetString(Resource.String.currency);
+			etAmount.Text = string.Format("{0} {1}",entries[position].TotalAmount, currency);
 
 			return view;
+		}
+
+		internal void LoadDataSource()
+		{
+			entries = BookkeeperManager.Instance
+									   .GetEntries()
+									   .OrderBy(e => e.Date)
+									   .ToList();
 		}
 
 	}

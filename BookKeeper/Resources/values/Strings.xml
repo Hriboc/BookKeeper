@@ -19,7 +19,12 @@
 	<string name="tv_total_amount_exc_tax">Totalt belopp (exkl. moms):</string>
 	<string name="tv_tax_rate">Moms:</string>
 	<string name="btn_add_entry">Lägg till händelse</string>
+	<string name="btn_update_entry">Uppdatera händelse</string>
 
 	<!-- Toast messages -->
 	<string name="toast_entry_added">Händelse inlagd</string>
+	<string name="toast_entry_updated">Händelse uppdaterad</string>
+
+	<!-- Misc -->
+	<string name="currency">kr</string>
 </resources>

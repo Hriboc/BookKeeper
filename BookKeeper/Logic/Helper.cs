@@ -3,6 +3,9 @@ namespace BookKeeper
 {
 	internal class Helper
 	{
+		internal const string EXTRA_ENTRY_ID = "entryId";
+		internal const string EXTRA_EDIT_MODE = "editMode";
+
 		private Helper() {}
 
 		// Formel för marginalmoms: M = P/(1+P)
