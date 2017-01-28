@@ -61,7 +61,7 @@ namespace BookKeeper
 		{
 			entries = BookkeeperManager.Instance
 									   .GetEntries()
-									   .OrderBy(e => e.Date)
+			                           .OrderBy(e => e.Date)
 									   .ToList();
 		}
 
