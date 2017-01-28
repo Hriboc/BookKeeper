@@ -3,18 +3,18 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
     <TextView
-        android:id="@+id/tv_item1"
+        android:id="@+id/tv_list_item_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <TextView
-        android:id="@+id/tv_item2"
+        android:id="@+id/tv_list_item_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:layout_marginLeft="15dp" />
+        android:layout_marginLeft="10dp" />
     <TextView
-        android:id="@+id/tv_item3"
+        android:id="@+id/tv_list_item_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"

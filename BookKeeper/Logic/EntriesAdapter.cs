@@ -44,9 +44,9 @@ namespace BookKeeper
 			var view = convertView ?? activity.LayoutInflater.Inflate(
 				Resource.Layout.EntryListItem, parent, false);
 
-			var etDate = view.FindViewById<TextView>(Resource.Id.tv_item1);
-			var etDesc = view.FindViewById<TextView>(Resource.Id.tv_item2);
-			var etAmount = view.FindViewById<TextView>(Resource.Id.tv_item3);
+			var etDate = view.FindViewById<TextView>(Resource.Id.tv_list_item_date);
+			var etDesc = view.FindViewById<TextView>(Resource.Id.tv_list_item_description);
+			var etAmount = view.FindViewById<TextView>(Resource.Id.tv_list_item_amount);
 
 			etDate.Text = entries[position].Date.ToShortDateString();
 			etDesc.Text = entries[position].Description;

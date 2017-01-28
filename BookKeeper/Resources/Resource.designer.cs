@@ -119,14 +119,14 @@ namespace BookKeeper
 			// aapt resource value: 0x7f040008
 			public const int tv_description = 2130968584;
 			
+			// aapt resource value: 0x7f04001d
+			public const int tv_list_item_amount = 2130968605;
+			
 			// aapt resource value: 0x7f04001b
-			public const int tv_item1 = 2130968603;
+			public const int tv_list_item_date = 2130968603;
 			
 			// aapt resource value: 0x7f04001c
-			public const int tv_item2 = 2130968604;
-			
-			// aapt resource value: 0x7f04001d
-			public const int tv_item3 = 2130968605;
+			public const int tv_list_item_description = 2130968604;
 			
 			// aapt resource value: 0x7f040017
 			public const int tv_tax_rate = 2130968599;
