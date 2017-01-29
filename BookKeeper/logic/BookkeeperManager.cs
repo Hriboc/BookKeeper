@@ -117,5 +117,32 @@ namespace BookKeeper
 		{
 			return db.Get<Entry>(id);
 		}
+
+		// Formel för marginalmoms: M = P/(1+P)
+		internal string GetTaxReport()
+		{
+			string taxes = "";
+			var incomeAccounts = IncomeAccounts.Select(a => a.ToString());
+
+			foreach (Entry e in GetEntries())
+			{
+				double marginTax = e.TaxRate * 0.01 / (1 + e.TaxRate * 0.01);
+				double tax = e.TotalAmount * marginTax;
+				if (incomeAccounts.Contains(e.IncomeOrExpanseAccount))
+					taxes += "+";
+				else taxes += "-";
+
+				taxes += tax + "\n";
+			}
+			return taxes.Remove(taxes.LastIndexOf('\n'));
+
+			/*
+			var taxes = GetEntries()
+				.Select(e => e.TotalAmount * e.TaxRate * 0.01)
+				.Select(t => t.ToString());
+			
+			return string.Join(Environment.NewLine, taxes);
+			*/
+		}
 	}
 }

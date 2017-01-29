@@ -21,6 +21,9 @@
 	<string name="btn_add_entry">Lägg till händelse</string>
 	<string name="btn_update_entry">Uppdatera händelse</string>
 
+	<!-- Create Reports layout-->
+	<string name="btn_tax_report">Momsrapport</string>
+
 	<!-- Toast messages -->
 	<string name="toast_entry_added">Händelse inlagd</string>
 	<string name="toast_entry_updated">Händelse uppdaterad</string>

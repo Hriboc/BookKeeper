@@ -27,6 +27,12 @@ namespace BookKeeper
 			{
 				StartActivity(typeof(EntryListActivity));
 			};
+
+			Button btnShowReports = FindViewById<Button>(Resource.Id.btn_show_reports);
+			btnShowReports.Click += delegate
+			{
+				StartActivity(typeof(CreateReportsActivity));
+			};
 		}
 	}
 }

@@ -61,6 +61,8 @@
     <Compile Include="EntryListActivity.cs" />
     <Compile Include="Logic\EntriesAdapter.cs" />
     <Compile Include="Logic\Helper.cs" />
+    <Compile Include="CreateReportsActivity.cs" />
+    <Compile Include="TaxReportActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -74,6 +76,8 @@
     <AndroidResource Include="Resources\layout\Entry.axml" />
     <AndroidResource Include="Resources\layout\EntryList.axml" />
     <AndroidResource Include="Resources\layout\EntryListItem.xml" />
+    <AndroidResource Include="Resources\layout\CreateReports.axml" />
+    <AndroidResource Include="Resources\layout\TaxReport.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\mipmap-hdpi\" />
