@@ -44,6 +44,9 @@ namespace BookKeeper
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f040000
+			public const int btn_accounts_report = 2130968576;
+			
 			// aapt resource value: 0x7f04001b
 			public const int btn_add_entry = 2130968603;
 			
@@ -58,9 +61,6 @@ namespace BookKeeper
 			
 			// aapt resource value: 0x7f040001
 			public const int btn_tax_report = 2130968577;
-			
-			// aapt resource value: 0x7f040000
-			public const int button1 = 2130968576;
 			
 			// aapt resource value: 0x7f040008
 			public const int et_date = 2130968584;
@@ -199,6 +199,9 @@ namespace BookKeeper
 			// aapt resource value: 0x7f030000
 			public const int app_name = 2130903040;
 			
+			// aapt resource value: 0x7f030010
+			public const int btn_accounts_report = 2130903056;
+			
 			// aapt resource value: 0x7f03000e
 			public const int btn_add_entry = 2130903054;
 			
@@ -211,14 +214,14 @@ namespace BookKeeper
 			// aapt resource value: 0x7f030003
 			public const int btn_show_reports = 2130903043;
 			
-			// aapt resource value: 0x7f030010
-			public const int btn_tax_report = 2130903056;
+			// aapt resource value: 0x7f030011
+			public const int btn_tax_report = 2130903057;
 			
 			// aapt resource value: 0x7f03000f
 			public const int btn_update_entry = 2130903055;
 			
-			// aapt resource value: 0x7f030014
-			public const int currency = 2130903060;
+			// aapt resource value: 0x7f030015
+			public const int currency = 2130903061;
 			
 			// aapt resource value: 0x7f030006
 			public const int rb_expense = 2130903046;
@@ -226,14 +229,14 @@ namespace BookKeeper
 			// aapt resource value: 0x7f030005
 			public const int rb_income = 2130903045;
 			
-			// aapt resource value: 0x7f030011
-			public const int toast_entry_added = 2130903057;
-			
 			// aapt resource value: 0x7f030012
-			public const int toast_entry_updated = 2130903058;
+			public const int toast_entry_added = 2130903058;
 			
 			// aapt resource value: 0x7f030013
-			public const int toast_user_input_error = 2130903059;
+			public const int toast_entry_updated = 2130903059;
+			
+			// aapt resource value: 0x7f030014
+			public const int toast_user_input_error = 2130903060;
 			
 			// aapt resource value: 0x7f03000a
 			public const int tv_account = 2130903050;

@@ -22,6 +22,7 @@
 	<string name="btn_update_entry">Uppdatera händelse</string>
 
 	<!-- Create Reports layout-->
+	<string name="btn_accounts_report">Rapport över konton</string>
 	<string name="btn_tax_report">Momsrapport</string>
 
 	<!-- Toast messages -->

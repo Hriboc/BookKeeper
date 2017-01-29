@@ -4,10 +4,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <Button
-        android:text="Button"
+        android:text="@string/btn_accounts_report"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/button1" />
+        android:id="@+id/btn_accounts_report" />
     <Button
         android:text="@string/btn_tax_report"
         android:layout_width="match_parent"

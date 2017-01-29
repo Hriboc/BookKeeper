@@ -24,7 +24,7 @@ namespace BookKeeper
 			SetContentView(Resource.Layout.TaxReport);
 
 			var etTaxReport = FindViewById<EditText>(Resource.Id.et_tax_report);
-			etTaxReport.Text = BookkeeperManager.Instance.GetTaxReport();
+			//etTaxReport.Text = BookkeeperManager.Instance.GetTaxReport();
 		}
 	}
 }
