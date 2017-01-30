@@ -35,18 +35,18 @@ namespace BookKeeper
 			if (db.Table<Account>().Count() == 0)
 			{
 				// Create income accounts
-				db.Insert(new Account("Försäljning varor", 3010, Account.INCOME));
-				db.Insert(new Account("Försäljning tjänster varor", 3310, Account.INCOME));
+				db.Insert(new Account("Försäljning varor", 3010));
+				db.Insert(new Account("Försäljning tjänster varor", 3310));
 
 				// Create expence accounts
-				db.Insert(new Account("Inköp", 4010, Account.EXPANSE));
-				db.Insert(new Account("Förbrukningsmaterial", 5460, Account.EXPANSE));
-				db.Insert(new Account("Mobiltelefon", 6212, Account.EXPANSE));
+				db.Insert(new Account("Inköp", 4010));
+				db.Insert(new Account("Förbrukningsmaterial", 5460));
+				db.Insert(new Account("Mobiltelefon", 6212));
 
 				// Create money accounts
-				db.Insert(new Account("Kassa", 1910, Account.MONEY));
-				db.Insert(new Account("Placeringskonto", 1940, Account.MONEY));
-				db.Insert(new Account("Egna Insättningar", 2018, Account.MONEY));
+				db.Insert(new Account("Kassa", 1910));
+				db.Insert(new Account("Placeringskonto", 1940));
+				db.Insert(new Account("Egna Insättningar", 2018));
 			}
 		}
 
@@ -65,7 +65,7 @@ namespace BookKeeper
 			get
 			{
 				return db.Table<Account>()
-					     .Where(a => a.Type == Account.INCOME)
+					     .Where(a => a.Number >= 3000 && a.Number < 4000)
 						 .ToList();
 			}
 		}
@@ -75,7 +75,7 @@ namespace BookKeeper
 			get
 			{
 				return db.Table<Account>()
-					     .Where(a => a.Type == Account.EXPANSE)
+					     .Where(a => a.Number >= 4000 && a.Number < 8000)
 						 .ToList();
 			}
 		}
@@ -85,7 +85,7 @@ namespace BookKeeper
 			get
 			{
 				return db.Table<Account>()
-					     .Where(a => a.Type == Account.MONEY)
+					     .Where(a => a.Number >= 1000 && a.Number < 3000)
 					     .ToList();
 			}
 		}
@@ -136,45 +136,36 @@ namespace BookKeeper
 				taxes += tax + "\n";
 			}
 			return taxes.Remove(taxes.LastIndexOf('\n'));
-
-			/*
-			var taxes = GetEntries()
-				.Select(e => e.TotalAmount * e.TaxRate * 0.01)
-				.Select(t => t.ToString());
-			
-			return string.Join(Environment.NewLine, taxes);
-			*/
 		}
 
 		internal string GetDetailedReportForAllAccounts()
 		{
 			string report = "";
-			var entries = GetEntries();
+			IList<Entry> entries = GetEntries();
 
-			report += AppendDetailedReportForAccount(report, IncomeAccounts, entries);
-			report += AppendDetailedReportForAccount(report, ExpenseAccounts, entries);
-			report += AppendDetailedReportForAccount(report, MoneyAccounts, entries);
+			report += GetDetailedReportForAccounts(IncomeAccounts, entries);
+			report += GetDetailedReportForAccounts(ExpenseAccounts, entries);
+			report += GetDetailedReportForAccounts(MoneyAccounts, entries);
 
-			return report;
+			int idxNewLinesEnd = report.LastIndexOf("\n\n\n", StringComparison.CurrentCulture);
+			return report.Remove(idxNewLinesEnd);
 		}
 
-		// passing by reference on report
-		string AppendDetailedReportForAccount(string report, IList<Account> accounts, IList<Entry> entries)
+		string GetDetailedReportForAccounts(IList<Account> accounts, IList<Entry> entries)
 		{
+			string report = "";
 			foreach (Account account in accounts)
 			{
-				// get all income entries for current account
-				var incomeEntries = entries.Where(entry => entry.IncomeOrExpanseAccount
-												  .Equals(account.ToString())).ToList();
-
-				if (incomeEntries != null && incomeEntries.Count > 0)
-					report += "*** " + account + "\n"; //TODO: lägg till total belopp för hela kontot
-				foreach (var ie in incomeEntries)
+				
+				report += "*** " + account + "\n"; //TODO: lägg till total belopp för hela kontot
+				foreach (var entry in entries)
 				{
-					report += string.Format("{0} - {1}, {2} kr\n", ie.Date.ToShortDateString(), ie.Description, ie.TotalAmount); // TODO: +/- på belopp
+					if(entry.IncomeOrExpanseAccount.Equals(account.ToString()) || entry.MoneyAccount.Equals(account.ToString()))
+						report += string.Format("{0} - {1}, {2} kr\n", entry.Date.ToShortDateString(), entry.Description, entry.TotalAmount); // TODO: +/- på belopp
 				}
+				report += "***\n";
 			}
-			return report;
+			return report + "\n\n";
 		}
 	}
 }

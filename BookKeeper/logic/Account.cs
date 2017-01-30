@@ -5,18 +5,12 @@ namespace BookKeeper
 {
 	public class Account
 	{
-		// Account types
-		internal const int INCOME = 1;
-		internal const int EXPANSE = 2;
-		internal const int MONEY = 3;
-
 		public Account() { }
 
-		internal Account(string name, int number, int type)
+		internal Account(string name, int number)
 		{
 			Name = name;
 			Number = number;
-			Type = type;
 		}
 
 		[PrimaryKey]

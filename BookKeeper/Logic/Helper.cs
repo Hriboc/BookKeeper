@@ -32,5 +32,16 @@ namespace BookKeeper
 		{
 			return double.Parse(rate.Remove(rate.IndexOf('%')));
 		}
+
+		/*
+		internal static double ParseEntryAccountNumber(string account)
+		{
+			int idxStart = account.IndexOf('(') + 1;
+			int idxEnd = account.IndexOf(')');
+			string accountNumber = account.Substring(idxStart, idxEnd - idxStart);
+
+			return double.Parse(accountNumber);
+		}
+		*/
 	}
 }
