@@ -63,6 +63,7 @@
     <Compile Include="Logic\Helper.cs" />
     <Compile Include="CreateReportsActivity.cs" />
     <Compile Include="TaxReportActivity.cs" />
+    <Compile Include="AccountsReportActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

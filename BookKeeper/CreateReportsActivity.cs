@@ -31,7 +31,7 @@ namespace BookKeeper
 			var btnAccountsReport = FindViewById<Button>(Resource.Id.btn_accounts_report);
 			btnAccountsReport.Click += delegate
 			{
-				StartActivity(typeof(TaxReportActivity));
+				StartActivity(typeof(AccountsReportActivity));
 			};
 		}
 	}

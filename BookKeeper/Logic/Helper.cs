@@ -19,6 +19,15 @@ namespace BookKeeper
 			return Math.Round(totalAmountExcTax,2).ToString();
 		}
 
+		internal static double CalculateTaxFromTotalAmont(double totalAmount, double taxRate)
+		{
+			taxRate *= 0.01;
+			double marginTax = taxRate / (1 + taxRate);
+			double tax = Math.Round(totalAmount * marginTax, 2);
+
+			return tax;
+		}
+
 		internal static double ParseTaxRate(string rate)
 		{
 			return double.Parse(rate.Remove(rate.IndexOf('%')));

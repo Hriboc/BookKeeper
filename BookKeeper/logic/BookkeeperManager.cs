@@ -118,7 +118,7 @@ namespace BookKeeper
 			return db.Get<Entry>(id);
 		}
 
-		// Formel för marginalmoms: M = P/(1+P)
+		// A row in tax report looks like this "Description  (+/-)Tax\n"
 		internal string GetTaxReport()
 		{
 			string taxes = "";
@@ -127,8 +127,8 @@ namespace BookKeeper
 			foreach (Entry e in GetEntries())
 			{
 				taxes += e.Description + "  ";
-				double marginTax = e.TaxRate * 0.01 / (1 + e.TaxRate * 0.01);
-				double tax = Math.Round(e.TotalAmount * marginTax, 2);
+				double tax = Helper.CalculateTaxFromTotalAmont(e.TotalAmount, e.TaxRate);
+
 				if (incomeAccounts.Contains(e.IncomeOrExpanseAccount))
 					taxes += "+";
 				else taxes += "-";
@@ -144,6 +144,37 @@ namespace BookKeeper
 			
 			return string.Join(Environment.NewLine, taxes);
 			*/
+		}
+
+		internal string GetDetailedReportForAllAccounts()
+		{
+			string report = "";
+			var entries = GetEntries();
+
+			report += AppendDetailedReportForAccount(report, IncomeAccounts, entries);
+			report += AppendDetailedReportForAccount(report, ExpenseAccounts, entries);
+			report += AppendDetailedReportForAccount(report, MoneyAccounts, entries);
+
+			return report;
+		}
+
+		// passing by reference on report
+		string AppendDetailedReportForAccount(string report, IList<Account> accounts, IList<Entry> entries)
+		{
+			foreach (Account account in accounts)
+			{
+				// get all income entries for current account
+				var incomeEntries = entries.Where(entry => entry.IncomeOrExpanseAccount
+												  .Equals(account.ToString())).ToList();
+
+				if (incomeEntries != null && incomeEntries.Count > 0)
+					report += "*** " + account + "\n"; //TODO: lägg till total belopp för hela kontot
+				foreach (var ie in incomeEntries)
+				{
+					report += string.Format("{0} - {1}, {2} kr\n", ie.Date.ToShortDateString(), ie.Description, ie.TotalAmount); // TODO: +/- på belopp
+				}
+			}
+			return report;
 		}
 	}
 }
