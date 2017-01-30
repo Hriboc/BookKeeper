@@ -16,7 +16,7 @@ namespace BookKeeper
 			double marginTax = applTax / (1 + applTax);
 			double totalAmountExcTax = totalAmountIncTax * (1 - marginTax);
 
-			return totalAmountExcTax.ToString();
+			return Math.Round(totalAmountExcTax,2).ToString();
 		}
 
 		internal static double ParseTaxRate(string rate)

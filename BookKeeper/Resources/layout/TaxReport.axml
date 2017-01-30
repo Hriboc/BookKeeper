@@ -10,5 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/et_tax_report"
+        android:background="#ffffffff"
+        android:textColor="#ff000000"
         android:enabled="false" />
 </LinearLayout>

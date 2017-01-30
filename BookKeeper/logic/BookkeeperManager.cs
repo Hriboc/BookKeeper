@@ -126,8 +126,9 @@ namespace BookKeeper
 
 			foreach (Entry e in GetEntries())
 			{
+				taxes += e.Description + "  ";
 				double marginTax = e.TaxRate * 0.01 / (1 + e.TaxRate * 0.01);
-				double tax = e.TotalAmount * marginTax;
+				double tax = Math.Round(e.TotalAmount * marginTax, 2);
 				if (incomeAccounts.Contains(e.IncomeOrExpanseAccount))
 					taxes += "+";
 				else taxes += "-";
