@@ -98,8 +98,8 @@ namespace BookKeeper
 			// aapt resource value: 0x7f04000c
 			public const int ll_type = 2130968588;
 			
-			// aapt resource value: 0x7f04001c
-			public const int lv_entries = 2130968604;
+			// aapt resource value: 0x7f04001f
+			public const int lv_entries = 2130968607;
 			
 			// aapt resource value: 0x7f040005
 			public const int rb_expense = 2130968581;
@@ -128,14 +128,14 @@ namespace BookKeeper
 			// aapt resource value: 0x7f04000a
 			public const int tv_description = 2130968586;
 			
-			// aapt resource value: 0x7f04001f
-			public const int tv_list_item_amount = 2130968607;
+			// aapt resource value: 0x7f04001e
+			public const int tv_list_item_amount = 2130968606;
+			
+			// aapt resource value: 0x7f04001c
+			public const int tv_list_item_date = 2130968604;
 			
 			// aapt resource value: 0x7f04001d
-			public const int tv_list_item_date = 2130968605;
-			
-			// aapt resource value: 0x7f04001e
-			public const int tv_list_item_description = 2130968606;
+			public const int tv_list_item_description = 2130968605;
 			
 			// aapt resource value: 0x7f040019
 			public const int tv_tax_rate = 2130968601;
@@ -166,22 +166,22 @@ namespace BookKeeper
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int CreateReports = 2130837504;
+			public const int CreateReportsLayout = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int Entry = 2130837505;
+			public const int EntryLayout = 2130837505;
 			
 			// aapt resource value: 0x7f020002
-			public const int EntryList = 2130837506;
+			public const int EntryListItemLayout = 2130837506;
 			
 			// aapt resource value: 0x7f020003
-			public const int EntryListItem = 2130837507;
+			public const int EntryListLayout = 2130837507;
 			
 			// aapt resource value: 0x7f020004
-			public const int Main = 2130837508;
+			public const int MainLayout = 2130837508;
 			
 			// aapt resource value: 0x7f020005
-			public const int TaxReport = 2130837509;
+			public const int ReportsLayout = 2130837509;
 			
 			static Layout()
 			{

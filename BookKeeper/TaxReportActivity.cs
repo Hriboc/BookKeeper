@@ -21,7 +21,7 @@ namespace BookKeeper
 			base.OnCreate(savedInstanceState);
 
 			// Set our view from the "TaxReport" layout resource
-			SetContentView(Resource.Layout.TaxReport);
+			SetContentView(Resource.Layout.ReportsLayout);
 
 			var etTaxReport = FindViewById<EditText>(Resource.Id.et_tax_report);
 			etTaxReport.Text = BookkeeperManager.Instance.GetTaxReport();

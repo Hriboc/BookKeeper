@@ -21,7 +21,7 @@ namespace BookKeeper
 			base.OnCreate(savedInstanceState);
 
 			// Set our view from the "CreateReports" layout resource
-			SetContentView(Resource.Layout.CreateReports);
+			SetContentView(Resource.Layout.CreateReportsLayout);
 
 			var btnTaxReport = FindViewById<Button>(Resource.Id.btn_tax_report);
 			btnTaxReport.Click += delegate {

@@ -29,7 +29,7 @@ namespace BookKeeper
 			base.OnCreate(savedInstanceState);
 
 			// Set our view from the "main" layout resource
-			SetContentView(Resource.Layout.Entry);
+			SetContentView(Resource.Layout.EntryLayout);
 
 			// Get references to widgets
 			rbIncome = FindViewById<RadioButton>(Resource.Id.rb_income); // default checket

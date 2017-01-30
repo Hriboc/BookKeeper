@@ -14,7 +14,7 @@ namespace BookKeeper
 			base.OnCreate(savedInstanceState);
 
 			// Set our view from the "main" layout resource
-			SetContentView(Resource.Layout.Main);
+			SetContentView(Resource.Layout.MainLayout);
 
 			Button btnNewEntry = FindViewById<Button>(Resource.Id.btn_new_entry);
 			btnNewEntry.Click += delegate

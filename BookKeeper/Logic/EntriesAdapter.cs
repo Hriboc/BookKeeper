@@ -42,7 +42,7 @@ namespace BookKeeper
 		public override View GetView(int position, View convertView, ViewGroup parent)
 		{
 			var view = convertView ?? activity.LayoutInflater.Inflate(
-				Resource.Layout.EntryListItem, parent, false);
+				Resource.Layout.EntryListItemLayout, parent, false);
 
 			var etDate = view.FindViewById<TextView>(Resource.Id.tv_list_item_date);
 			var etDesc = view.FindViewById<TextView>(Resource.Id.tv_list_item_description);

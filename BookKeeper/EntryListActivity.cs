@@ -21,7 +21,7 @@ namespace BookKeeper
 			base.OnCreate(savedInstanceState);
 
 			// Set our view from the "EntryList" layout resource
-			SetContentView(Resource.Layout.EntryList);
+			SetContentView(Resource.Layout.EntryListLayout);
 
 			var lvEntries = FindViewById<ListView>(Resource.Id.lv_entries);
 			lvEntries.Adapter = new EntriesAdapter(this);

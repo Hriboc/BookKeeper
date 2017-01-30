@@ -71,13 +71,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml" />
+    <AndroidResource Include="Resources\layout\MainLayout.axml" />
     <AndroidResource Include="Resources\values\Strings.xml" />
-    <AndroidResource Include="Resources\layout\Entry.axml" />
-    <AndroidResource Include="Resources\layout\EntryList.axml" />
-    <AndroidResource Include="Resources\layout\EntryListItem.xml" />
-    <AndroidResource Include="Resources\layout\CreateReports.axml" />
-    <AndroidResource Include="Resources\layout\TaxReport.axml" />
+    <AndroidResource Include="Resources\layout\EntryLayout.axml" />
+    <AndroidResource Include="Resources\layout\EntryListLayout.axml" />
+    <AndroidResource Include="Resources\layout\EntryListItemLayout.xml" />
+    <AndroidResource Include="Resources\layout\CreateReportsLayout.axml" />
+    <AndroidResource Include="Resources\layout\ReportsLayout.axml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\mipmap-hdpi\" />
