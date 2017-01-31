@@ -35,18 +35,17 @@ namespace BookKeeper
 			if (db.Table<Account>().Count() == 0)
 			{
 				// Create income accounts
-				db.Insert(new Account("Försäljning varor", 3010));
-				db.Insert(new Account("Försäljning tjänster varor", 3310));
-
+				db.Insert(new Account("Försäljning varor", 3010, Account.INCOME));
+				db.Insert(new Account("Försäljning tjänster", 3310, Account.INCOME));
 				// Create expence accounts
-				db.Insert(new Account("Inköp", 4010));
-				db.Insert(new Account("Förbrukningsmaterial", 5460));
-				db.Insert(new Account("Mobiltelefon", 6212));
+				db.Insert(new Account("Inköp", 4010, Account.EXPANSE));
+				db.Insert(new Account("Förbrukningsmaterial", 5460, Account.EXPANSE));
+				db.Insert(new Account("Mobiltelefon", 6212, Account.EXPANSE));
 
 				// Create money accounts
-				db.Insert(new Account("Kassa", 1910));
-				db.Insert(new Account("Placeringskonto", 1940));
-				db.Insert(new Account("Egna Insättningar", 2018));
+				db.Insert(new Account("Kassa", 1910, Account.MONEY));
+				db.Insert(new Account("Placeringskonto", 1940, Account.MONEY));
+				db.Insert(new Account("Egna Insättningar", 2018, Account.MONEY));
 			}
 		}
 
@@ -65,7 +64,7 @@ namespace BookKeeper
 			get
 			{
 				return db.Table<Account>()
-					     .Where(a => a.Number >= 3000 && a.Number < 4000)
+					     .Where(a => a.Type == Account.INCOME)
 						 .ToList();
 			}
 		}
@@ -75,7 +74,7 @@ namespace BookKeeper
 			get
 			{
 				return db.Table<Account>()
-					     .Where(a => a.Number >= 4000 && a.Number < 8000)
+					     .Where(a => a.Type == Account.EXPANSE)
 						 .ToList();
 			}
 		}
@@ -85,7 +84,7 @@ namespace BookKeeper
 			get
 			{
 				return db.Table<Account>()
-					     .Where(a => a.Number >= 1000 && a.Number < 3000)
+					     .Where(a => a.Type == Account.MONEY)
 					     .ToList();
 			}
 		}
@@ -108,7 +107,7 @@ namespace BookKeeper
 			db.Update(e);
 		}
 
-		internal IList<Entry> GetEntries()
+		internal IList<Entry> GetAllEntries()
 		{
 			return db.Table<Entry>().ToList();
 		}
@@ -122,16 +121,15 @@ namespace BookKeeper
 		internal string GetTaxReport()
 		{
 			string taxes = "";
-			var incomeAccounts = IncomeAccounts.Select(a => a.ToString());
+			var expenseAccounts = ExpenseAccounts.Select(a => a.ToString());
 
-			foreach (Entry e in GetEntries())
+			foreach (Entry entry in GetAllEntries())
 			{
-				taxes += e.Description + "  ";
-				double tax = Helper.CalculateTaxFromTotalAmont(e.TotalAmount, e.TaxRate);
+				taxes += entry.Description + "  ";
+				double tax = Helper.CalculateTaxFromTotalAmont(entry.TotalAmount, entry.TaxRate);
 
-				if (incomeAccounts.Contains(e.IncomeOrExpanseAccount))
-					taxes += "+";
-				else taxes += "-";
+				if (expenseAccounts.Contains(entry.IncomeOrExpanseAccount))
+					taxes += "-";
 
 				taxes += tax + "\n";
 			}
@@ -141,7 +139,7 @@ namespace BookKeeper
 		internal string GetDetailedReportForAllAccounts()
 		{
 			string report = "";
-			IList<Entry> entries = GetEntries();
+			IList<Entry> entries = GetAllEntries();
 
 			report += GetDetailedReportForAccounts(IncomeAccounts, entries);
 			report += GetDetailedReportForAccounts(ExpenseAccounts, entries);
@@ -156,16 +154,28 @@ namespace BookKeeper
 			string report = "";
 			foreach (Account account in accounts)
 			{
-				
-				report += "*** " + account + "\n"; //TODO: lägg till total belopp för hela kontot
+				double sum = 0;
+				report += string.Format("*** {0} (total: [sum] kr)\n", account);
 				foreach (var entry in entries)
 				{
-					if(entry.IncomeOrExpanseAccount.Equals(account.ToString()) || entry.MoneyAccount.Equals(account.ToString()))
-						report += string.Format("{0} - {1}, {2} kr\n", entry.Date.ToShortDateString(), entry.Description, entry.TotalAmount); // TODO: +/- på belopp
+					if (entry.IncomeOrExpanseAccount.Equals(account.ToString()) || entry.MoneyAccount.Equals(account.ToString()))
+					{
+						if (account.Type == Account.EXPANSE)
+							entry.TotalAmount = -entry.TotalAmount;
+						report += string.Format("{0} - {1}, {2} kr\n", entry.Date.ToShortDateString(), 
+							                    entry.Description, entry.TotalAmount);
+						sum += entry.TotalAmount;
+					}
 				}
+				report = report.Replace("[sum]", sum.ToString());  
 				report += "***\n";
 			}
 			return report + "\n\n";
+		}
+
+		internal void DeleteAllEntries()
+		{
+			db.DeleteAll<Entry>();
 		}
 	}
 }

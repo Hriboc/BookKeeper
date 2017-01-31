@@ -60,7 +60,7 @@ namespace BookKeeper
 		internal void LoadDataSource()
 		{
 			entries = BookkeeperManager.Instance
-									   .GetEntries()
+									   .GetAllEntries()
 			                           .OrderBy(e => e.Date)
 									   .ToList();
 		}

@@ -33,6 +33,13 @@ namespace BookKeeper
 			{
 				StartActivity(typeof(CreateReportsActivity));
 			};
+
+			Button btnDeleteAllEntries = FindViewById<Button>(Resource.Id.btn_delete_all_entries);
+			btnDeleteAllEntries.Click += delegate
+			{
+				BookkeeperManager.Instance.DeleteAllEntries();
+				Toast.MakeText(this, Resource.String.toast_all_entries_deleted, ToastLength.Short).Show();
+			};
 		}
 	}
 }

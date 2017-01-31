@@ -50,6 +50,9 @@ namespace BookKeeper
 			// aapt resource value: 0x7f04001b
 			public const int btn_add_entry = 2130968603;
 			
+			// aapt resource value: 0x7f040023
+			public const int btn_delete_all_entries = 2130968611;
+			
 			// aapt resource value: 0x7f040020
 			public const int btn_new_entry = 2130968608;
 			
@@ -68,8 +71,8 @@ namespace BookKeeper
 			// aapt resource value: 0x7f04000b
 			public const int et_description = 2130968587;
 			
-			// aapt resource value: 0x7f040023
-			public const int et_tax_report = 2130968611;
+			// aapt resource value: 0x7f040024
+			public const int et_tax_report = 2130968612;
 			
 			// aapt resource value: 0x7f040017
 			public const int et_total_amount_exc_tax = 2130968599;
@@ -199,11 +202,14 @@ namespace BookKeeper
 			// aapt resource value: 0x7f030000
 			public const int app_name = 2130903040;
 			
-			// aapt resource value: 0x7f030010
-			public const int btn_accounts_report = 2130903056;
+			// aapt resource value: 0x7f030011
+			public const int btn_accounts_report = 2130903057;
 			
-			// aapt resource value: 0x7f03000e
-			public const int btn_add_entry = 2130903054;
+			// aapt resource value: 0x7f03000f
+			public const int btn_add_entry = 2130903055;
+			
+			// aapt resource value: 0x7f030004
+			public const int btn_delete_all_entries = 2130903044;
 			
 			// aapt resource value: 0x7f030001
 			public const int btn_new_entry = 2130903041;
@@ -214,53 +220,56 @@ namespace BookKeeper
 			// aapt resource value: 0x7f030003
 			public const int btn_show_reports = 2130903043;
 			
-			// aapt resource value: 0x7f030011
-			public const int btn_tax_report = 2130903057;
-			
-			// aapt resource value: 0x7f03000f
-			public const int btn_update_entry = 2130903055;
-			
-			// aapt resource value: 0x7f030015
-			public const int currency = 2130903061;
-			
-			// aapt resource value: 0x7f030006
-			public const int rb_expense = 2130903046;
-			
-			// aapt resource value: 0x7f030005
-			public const int rb_income = 2130903045;
-			
 			// aapt resource value: 0x7f030012
-			public const int toast_entry_added = 2130903058;
+			public const int btn_tax_report = 2130903058;
 			
-			// aapt resource value: 0x7f030013
-			public const int toast_entry_updated = 2130903059;
+			// aapt resource value: 0x7f030010
+			public const int btn_update_entry = 2130903056;
 			
-			// aapt resource value: 0x7f030014
-			public const int toast_user_input_error = 2130903060;
-			
-			// aapt resource value: 0x7f03000a
-			public const int tv_account = 2130903050;
+			// aapt resource value: 0x7f030017
+			public const int currency = 2130903063;
 			
 			// aapt resource value: 0x7f030007
-			public const int tv_date = 2130903047;
+			public const int rb_expense = 2130903047;
 			
-			// aapt resource value: 0x7f030008
-			public const int tv_description = 2130903048;
+			// aapt resource value: 0x7f030006
+			public const int rb_income = 2130903046;
 			
-			// aapt resource value: 0x7f03000d
-			public const int tv_tax_rate = 2130903053;
+			// aapt resource value: 0x7f030016
+			public const int toast_all_entries_deleted = 2130903062;
 			
-			// aapt resource value: 0x7f03000c
-			public const int tv_total_amount_exc_tax = 2130903052;
+			// aapt resource value: 0x7f030013
+			public const int toast_entry_added = 2130903059;
+			
+			// aapt resource value: 0x7f030014
+			public const int toast_entry_updated = 2130903060;
+			
+			// aapt resource value: 0x7f030015
+			public const int toast_user_input_error = 2130903061;
 			
 			// aapt resource value: 0x7f03000b
-			public const int tv_total_amount_inc_tax = 2130903051;
+			public const int tv_account = 2130903051;
+			
+			// aapt resource value: 0x7f030008
+			public const int tv_date = 2130903048;
 			
 			// aapt resource value: 0x7f030009
-			public const int tv_type = 2130903049;
+			public const int tv_description = 2130903049;
 			
-			// aapt resource value: 0x7f030004
-			public const int tv_user_info = 2130903044;
+			// aapt resource value: 0x7f03000e
+			public const int tv_tax_rate = 2130903054;
+			
+			// aapt resource value: 0x7f03000d
+			public const int tv_total_amount_exc_tax = 2130903053;
+			
+			// aapt resource value: 0x7f03000c
+			public const int tv_total_amount_inc_tax = 2130903052;
+			
+			// aapt resource value: 0x7f03000a
+			public const int tv_type = 2130903050;
+			
+			// aapt resource value: 0x7f030005
+			public const int tv_user_info = 2130903045;
 			
 			static String()
 			{

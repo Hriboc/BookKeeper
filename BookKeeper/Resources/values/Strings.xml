@@ -6,6 +6,7 @@
 	<string name="btn_new_entry">Ny Händelse</string>
 	<string name="btn_show_all_entries">Visa Alla Händelser</string> 
 	<string name="btn_show_reports">Visa Rapporter</string>
+	<string name="btn_delete_all_entries">Ta Bort Alla Händelser</string>
 	
 	<!-- Entry layout-->
 	<string name="tv_user_info">Här kan du lägga till nya händelser, antingen inkomster eller utgifter.</string>
@@ -29,6 +30,7 @@
 	<string name="toast_entry_added">Händelse inlagd</string>
 	<string name="toast_entry_updated">Händelse uppdaterad</string>
 	<string name="toast_user_input_error">Saknar eller Fel inmatning</string>
+	<string name="toast_all_entries_deleted">Alla händelser är borttagna</string>
 
 	<!-- Misc -->
 	<string name="currency">kr</string>
