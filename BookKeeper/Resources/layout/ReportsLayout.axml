@@ -5,13 +5,11 @@
     android:layout_height="match_parent"
     android:minWidth="25px"
     android:minHeight="25px">
-    <EditText
-        android:inputType="textMultiLine"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/et_tax_report"
+        android:id="@+id/tv_report"
         android:background="#ffffffff"
         android:textColor="#ff000000"
-        android:scrollbars="vertical"
-        android:textIsSelectable="false" />
+        android:scrollbars="vertical" />
 </LinearLayout>

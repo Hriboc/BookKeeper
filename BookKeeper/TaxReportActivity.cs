@@ -23,8 +23,9 @@ namespace BookKeeper
 			// Set our view from the "TaxReport" layout resource
 			SetContentView(Resource.Layout.ReportsLayout);
 
-			var etTaxReport = FindViewById<EditText>(Resource.Id.et_tax_report);
-			etTaxReport.Text = BookkeeperManager.Instance.GetTaxReport();
+			var etReport = FindViewById<TextView>(Resource.Id.tv_report);
+			etReport.MovementMethod = new Android.Text.Method.ScrollingMovementMethod();
+			etReport.Text = BookkeeperManager.Instance.GetTaxReport();
 		}
 	}
 }

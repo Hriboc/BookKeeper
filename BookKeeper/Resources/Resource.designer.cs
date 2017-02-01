@@ -71,9 +71,6 @@ namespace BookKeeper
 			// aapt resource value: 0x7f04000b
 			public const int et_description = 2130968587;
 			
-			// aapt resource value: 0x7f040024
-			public const int et_tax_report = 2130968612;
-			
 			// aapt resource value: 0x7f040017
 			public const int et_total_amount_exc_tax = 2130968599;
 			
@@ -139,6 +136,9 @@ namespace BookKeeper
 			
 			// aapt resource value: 0x7f04001d
 			public const int tv_list_item_description = 2130968605;
+			
+			// aapt resource value: 0x7f040024
+			public const int tv_report = 2130968612;
 			
 			// aapt resource value: 0x7f040019
 			public const int tv_tax_rate = 2130968601;
